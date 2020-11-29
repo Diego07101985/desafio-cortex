@@ -33,12 +33,11 @@ def init_db_command():
 @with_appcontext
 def init_workers():
     consumer = ConsumerCurrency(fpika.channel())
-    # consumer2 = ConsumerCurrency(fpika.channel())
+    consumer2 = ConsumerCurrency(fpika.channel())
     workers = 2
     pool = multiprocessing.Pool(processes=workers)
     pool.apply_async(consumer.receive_currencys_in_base_bbb('*.info'))
-    # pool.apply_async(consumer2.receive_currencys_in_base_bbb('*.info'))
-    # Stay alive
+    pool.apply_async(consumer2.receive_currencys_in_base_bbb('*.info'))
     try:
         while True:
             continue
@@ -48,7 +47,7 @@ def init_workers():
         pool.join()
 
 
-@ click.command()
+@click.command()
 def test():
     """Run the tests."""
     import pytest
@@ -56,8 +55,8 @@ def test():
     exit(rv)
 
 
-@ click.command()
-@ with_appcontext
+@click.command()
+@with_appcontext
 def seed():
     db.session.bulk_save_objects(Currency(simbol_currency=key,
                                           name_description=value
