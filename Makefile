@@ -59,3 +59,9 @@ run:
        .  build/bin/activate; \
 	   FLASK_APP=autoapp   FLASK_DEBUG=true flask run\
     )
+
+workers:
+	- ( \
+       .  build/bin/activate; \
+	   FLASK_APP=autoapp flask init-workers;\
+    )
