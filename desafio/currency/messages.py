@@ -1,0 +1,9 @@
+HTTP_STATUS_CONFLICT = "A moeda ja existe"
+HTTP_STATUS_OK_GET = "Request Answered"
+HTTP_STATUS_OK_DELETE = 'The currency was successfully removed'
+HTTP_STATUS_CREATED_POST = 'Sua moeda foi criada com sucesso'
+HTTP_STATUS_NO_CONTENT_GET = "There is no such currency"
+HTTP_STRICT_BAD_REQUEST = '"necessario campo symbol e name_description"'
+HTTP_STATUS_OK_GET_COTA = 'Atingiu o limite de cota de requisições'
+HTTP_STATUS_BAD_REQUEST_GET = 'O elemento amount não corresponde a um valor valido'
+HTTP_STATUS_BAD_REQUEST_QUERY_GET = "necessario as querys strings from e to"

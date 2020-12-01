@@ -18,6 +18,7 @@ def create_app(config_object=settings.ProdConfig):
 
 def register_blueprints(app):
     app.register_blueprint(currency.views.bp)
+    app.register_blueprint(currency.views.currencies)
 
 
 def register_shellcontext(app):

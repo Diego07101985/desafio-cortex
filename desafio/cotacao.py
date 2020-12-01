@@ -117,19 +117,19 @@ def split_currencys_quotation_by_date(from_currency, to_currency):
 def get_relation_between_currency(from_currency, to_currency, currencys):
     quotation_date = split_currencys_quotation_by_date(
         from_currency, to_currency)
-    relacao_disparidade_moedas = ''
+    currencies_relation_disparity = ''
     lista_relacao = []
     dict_relation_between = {}
     for key, cotacao in quotation_date.items():
         for i in range(len(quotation_date[key][0])):
-            relacao_disparidade_moedas = quotation_date[key][0][i]['cotacaoCompra'] / \
+            currencies_relation_disparity = quotation_date[key][0][i]['cotacaoCompra'] / \
                 quotation_date[key][1][i]['cotacaoCompra']
             lista_relacao.append({
-                'relacao_currency': relacao_disparidade_moedas,
+                'relacao_currency': currencies_relation_disparity,
                 'dataHoraCotacao': quotation_date[key][0][i]['dataHoraCotacao'],
             })
-            relation_key = currencys[0]['simbolo'] + \
-                '-'+currencys[1]['simbolo']+'-'+key
+            relation_key = currencys[0] + \
+                '-'+currencys[1]+'-'+key
 
             dict_relation_between.update({relation_key: lista_relacao})
 
