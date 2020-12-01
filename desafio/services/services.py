@@ -1,6 +1,6 @@
-import json
-import requests
 from datetime import datetime
+import requests
+import json
 
 
 class ServiceQuoteCurrencyPrice(object):

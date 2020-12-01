@@ -17,3 +17,4 @@ pytest-mock
 requests
 psycopg2-binary==2.8.5
 cryptography==3.0
+pika==1.1.0

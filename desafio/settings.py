@@ -27,6 +27,16 @@ class ProdConfig(Config):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         'DATABASE_URL', 'mysql+pymysql://admin:admin@mysql:3306/persona_db')
+    FLASK_PIKA_PARAMS = {
+        'host': 'localhost',  # amqp.server.com
+        'username': 'rabbitmq',  # convenience param for username
+        'password': 'rabbitmq',  # convenience param for password
+        'port': 5672,  # amqp server port
+    }
+    FLASK_PIKA_POOL_PARAMS = {
+        'pool_size': 1024,
+        'pool_recycle': 10
+    }
 
 
 class DevConfig(Config):
@@ -39,6 +49,16 @@ class DevConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///{0}'.format(DB_PATH)
     CACHE_TYPE = 'simple'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    FLASK_PIKA_PARAMS = {
+        'host': 'localhost',  # amqp.server.com
+        'username': 'rabbitmq',  # convenience param for username
+        'password': 'rabbitmq',  # convenience param for password
+        'port': 5672,  # amqp server port
+    }
+    FLASK_PIKA_POOL_PARAMS = {
+        'pool_size': 1024,
+        'pool_recycle': 10
+    }
 
 
 class TestConfig(Config):

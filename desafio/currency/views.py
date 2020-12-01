@@ -1,9 +1,14 @@
-from flask import jsonify, Blueprint, request
-from desafio.services import ServiceQuoteCurrencyPrice
-from desafio.extensions import cache
-import desafio.currency.messages as messages
-from http import HTTPStatus
+import time
+from desafio.services import ProducerCurrency
+from flask import request, jsonify
+from desafio.extensions import fpika
+from flask import jsonify, Blueprint
 import json
+from http import HTTPStatus
+import desafio.currency.messages as messages
+from desafio.extensions import cache
+from desafio.services import ServiceQuoteCurrencyPrice
+from flask import jsonify, Blueprint, request
 
 bp = Blueprint('default', __name__,
                url_prefix="/")
