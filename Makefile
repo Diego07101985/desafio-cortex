@@ -21,7 +21,7 @@ test:
 	- ( \
        .  build/bin/activate; \
 	   FLASK_APP=autoapp flask test;\
-       docker-compose down testerabbitmq testeredis \
+       docker-compose stop testerabbitmq testeredis; \
     )
 
 install:
