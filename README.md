@@ -90,9 +90,6 @@ O uso do rabbimq se da a necessidade do uso de fila de prioridade neste caso a c
         ]
          } 
     ```
-## DDD
-
-Trabalhou se no conceito do livro de Eric Evans (DDD) na concepção da arquitetura de software. Possuindo assim a ideias de Serviços e Repositorios, que auxiliam criar uma arquitetura com alta coesão e baixo acoplamento
 
 ## Como executar o projeto
 Para executar os arquivos makefile é necessario estar na pasta raiz do projeto
