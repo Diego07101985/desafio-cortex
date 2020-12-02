@@ -18,27 +18,22 @@ class Config(object):
 class ProdConfig(Config):
     """Production configuration."""
     ENV = 'prod'
-    DEBUG = False
+    DEBUG = True
     CACHE_TYPE = "redis"
     CACHE_DEFAULT_TIMEOUT = 300
     CACHE_REDIS_HOST = "redis"
     CACHE_REDIS_PORT = 6379
     SECRET_KEY = ""
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get(
-        'DATABASE_URL', 'mysql+pymysql://admin:admin@mysql:3306/persona_db')
-
-
-class DevConfig(Config):
-    """Development configuration."""
-    ENV = 'dev'
-    DEBUG = True
-    DB_NAME = 'currency.sqlite'
-    SECRET_KEY = ""
-    DB_PATH = os.path.join(Config.PROJECT_ROOT, DB_NAME)
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///{0}'.format(DB_PATH)
-    CACHE_TYPE = 'simple'
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    FLASK_PIKA_PARAMS = {
+        'host': 'rabbitmq',  # amqp.server.com
+        'username': 'rabbitmq',  # convenience param for username
+        'password': 'rabbitmq',  # convenience param for password
+        'port': 5672,  # amqp server port
+    }
+    FLASK_PIKA_POOL_PARAMS = {
+        'pool_size': 1024,
+        'pool_recycle': 10
+    }
 
 
 class TestConfig(Config):
@@ -46,8 +41,18 @@ class TestConfig(Config):
     TESTING = True
     DEBUG = True
     SECRET_KEY = "test"
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    CACHE_TYPE = 'simple'
-    DB_NAME = 'test.sqlite'
-    DB_PATH = os.path.join(Config.PROJECT_ROOT, DB_NAME)
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///{0}'.format(DB_PATH)
+    CACHE_TYPE = "redis"
+    CACHE_DEFAULT_TIMEOUT = 300
+    CACHE_REDIS_HOST = "localhost"
+    CACHE_REDIS_PORT = 6379
+
+    FLASK_PIKA_PARAMS = {
+        'host': 'localhost',  # amqp.server.com
+        'username': 'rabbitmq',  # convenience param for username
+        'password': 'rabbitmq',  # convenience param for password
+        'port': 5672,  # amqp server port
+    }
+    FLASK_PIKA_POOL_PARAMS = {
+        'pool_size': 1024,
+        'pool_recycle': 10
+    }

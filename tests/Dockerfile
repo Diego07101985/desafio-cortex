@@ -5,8 +5,8 @@ LABEL MAINTAINER="Diego Silva de Salles disalles7@gmail.com"
 WORKDIR /tests/
 
 
-RUN apk add --no-cache --virtual build-deps gcc postgresql-dev python3-dev musl-dev  libffi-dev libressl-dev  mariadb-dev 
-    
+RUN apk add --no-cache --virtual build-deps gcc python3-dev musl-dev  libffi-dev libressl-dev  
+
 ADD . /tests
 ADD ./requirements.txt /tests/requirements.txt
 
