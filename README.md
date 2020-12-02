@@ -97,11 +97,11 @@ Trabalhou se no conceito do livro de Eric Evans (DDD) na concepção da arquitet
 ## Como executar o projeto
 Para executar os arquivos makefile é necessario estar na pasta raiz do projeto
 
- Para executar os tests:
-    - ```docker-compose up -d --build testerabbitmq testeredis ```
-    - ``` make install ```
-    - ``` make test ```
-    
- Para executar em prod :
-    - ```make prod```
-    - ```make workers```
+Para executar os tests:
+ - ```docker-compose up -d --build testerabbitmq testeredis ```
+ - ``` make install ```
+ - ``` make test ```
+
+Para executar em prod :
+ - ```make prod```
+ - ```make workers```
