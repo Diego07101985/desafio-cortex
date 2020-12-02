@@ -1,14 +1,12 @@
-import time
-from desafio.services import ProducerCurrency
-from flask import request, jsonify
-from desafio.extensions import fpika
-from flask import jsonify, Blueprint
 import json
 from http import HTTPStatus
 import desafio.currency.messages as messages
-from desafio.extensions import cache
-from desafio.services import ServiceQuoteCurrencyPrice
+from desafio.extensions import cache, fpika
+from desafio.currency.services import ServiceQuoteCurrencyPrice
 from flask import jsonify, Blueprint, request
+from desafio.producers import ProducerCurrency
+from desafio.currency.models import RequestCurrencyQuotationParam
+
 
 bp = Blueprint('default', __name__,
                url_prefix="/")
@@ -37,6 +35,8 @@ def get_quotes():
             HTTPStatus.BAD_REQUEST, JSON_CONTENT
 
     amount = request.args.get('amount')
+    priority = request.args.get('priority')
+
     try:
         amount = float(amount)
     except ValueError:
@@ -61,8 +61,30 @@ def get_quotes():
         return json.dumps({'error':  messages.HTTP_STATUS_NO_CONTENT_GET}), \
             HTTPStatus.NO_CONTENT, JSON_CONTENT
 
-    result = service_currencies.get_ratio_between_currencies_in_given_period(
-        from_currency, to_currency, initial_date, final_date)
+    key_period_request = f'{from_currency}-{to_currency}-{initial_date}-{final_date}'
 
-    return json.dumps(result), \
+    cache_period_request = cache.get(key_period_request)
+
+    if not cache_period_request:
+        request_params = RequestCurrencyQuotationParam(
+            from_currency, to_currency, initial_date, final_date)
+        result = service_currencies.get_relation_ratio_between_currencies_in_given_period(
+            request_params)
+        channel = fpika.channel()
+        producer = ProducerCurrency(channel)
+        if not priority:
+            producer.get_currencys_in_base_bbc(
+                1, 'relation.between.currencys', request_params)
+        else:
+            producer.get_currencys_in_base_bbc(
+                priority, 'relation.between.currencys', request_params)
+
+        quotations_currency = service_currencies.calc_quotes(result, amount)
+
+        return json.dumps({'status': 'MISS', 'results': quotations_currency}), \
+            HTTPStatus.OK, JSON_CONTENT
+
+    quotations_currency = service_currencies.calc_quotes(
+        cache_period_request, amount)
+    return json.dumps({'status': 'HIT', 'results': quotations_currency}), \
         HTTPStatus.OK, JSON_CONTENT

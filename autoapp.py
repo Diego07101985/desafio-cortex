@@ -1,14 +1,11 @@
 import os
-import logging
 
 from flask.helpers import get_debug_flag
 from desafio.app import create_app
-from desafio.settings import DevConfig, ProdConfig
+from desafio.settings import ProdConfig
 from logging.config import dictConfig
-from flask.logging import default_handler
 
-CONFIG = DevConfig if get_debug_flag() else ProdConfig
-application = create_app(CONFIG)
+application = create_app(ProdConfig)
 
 dictConfig({
     'version': 1,
@@ -25,13 +22,6 @@ dictConfig({
         'handlers': ['wsgi']
     }
 })
-
-for logger in (
-    application.logger,
-    logging.getLogger('sqlalchemy'),
-):
-    logger.addHandler(default_handler)
-
 
 if __name__ == "__main__":
     ENVIRONMENT_PORT = os.environ.get("APP_PORT", 5000)

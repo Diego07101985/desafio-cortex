@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from desafio import settings, commands, currency
 from flask import Flask
-from flask_migrate import MigrateCommand
-from desafio.extensions import cache, db, migrate, redis_store, fpika
+from desafio.extensions import cache, fpika
 
 
 def create_app(config_object=settings.ProdConfig):
@@ -24,22 +23,15 @@ def register_blueprints(app):
 def register_shellcontext(app):
     def shell_context():
         return {
-            'db':  db,
         }
     app.shell_context_processor(shell_context)
 
 
 def register_extensions(app):
     cache.init_app(app)
-    db.init_app(app)
-    redis_store.init_app(app)
-    migrate.init_app(app, db)
     fpika.init_app(app)
 
 
 def register_commands(app):
     app.cli.add_command(commands.test)
-    app.cli.add_command(commands.init_db_command)
-    app.cli.add_command(commands.seed)
-    app.cli.add_command('db', MigrateCommand)
     app.cli.add_command(commands.init_workers)

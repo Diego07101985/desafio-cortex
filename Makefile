@@ -1,23 +1,8 @@
 prod:
 	- ( \
-	  docker-compose  -f docker-compose.yml up -d  --build flask  mysql  redis webserver   \
+	  docker-compose  -f docker-compose.yml up --build redis rabbitmq flask webserver \
     )
 
-testcarga:
-	- ( \
-	  docker-compose  -f docker-compose.yml up  --build \
-    )
-    
-dev:    
-	- ( \
-	   docker-compose  -f docker-compose.dev.yml up -d  --build\
-    )
-  
-testdocker:
-	- ( \
-       docker build -t tests -f tests/Dockerfile . ; \
-	     docker run -it tests;  \
-    )
 
 removetest:
 	- ( \
@@ -27,24 +12,16 @@ removetest:
 remove:
 	- ( \
         docker-compose stop;\
-        docker-compose down --rmi all  -v  --remove-orphans ; \
+        docker-compose down; \
         docker volume prune; \
         docker image prune; \
         )
-
+        
 test:
 	- ( \
        .  build/bin/activate; \
 	   FLASK_APP=autoapp flask test;\
-    )
-
-migrate:
-	- ( \
-       .  build/bin/activate; \
-	   FLASK_APP=autoapp FLASK_DEBUG=true  flask db init;\
-       FLASK_APP=autoapp  FLASK_DEBUG=true flask db migrate;\
-       FLASK_APP=autoapp  FLASK_DEBUG=true flask db upgrade;\
-       FLASK_APP=autoapp  FLASK_DEBUG=true flask seed;\
+       docker-compose down testerabbitmq testeredis \
     )
 
 install:
@@ -63,5 +40,5 @@ run:
 workers:
 	- ( \
        .  build/bin/activate; \
-	   FLASK_APP=autoapp flask init-workers;\
+	   docker-compose run flask sh -c 'FLASK_APP=autoapp   FLASK_DEBUG=true flask init-workers;'\
     )
