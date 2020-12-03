@@ -39,6 +39,7 @@ def get_quotes():
 
     try:
         amount = float(amount)
+        priority = int(priority)
     except ValueError:
         return json.dumps({'error': messages.HTTP_STATUS_BAD_REQUEST_GET}), \
             HTTPStatus.BAD_REQUEST, JSON_CONTENT
