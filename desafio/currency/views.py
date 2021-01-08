@@ -53,7 +53,6 @@ def get_quotes():
         try:
             cache_currencys = service_currencies.get_all_currencys()
             cache.set(cache_currency_key, cache_currencys)
-
         except ValueError:
             return json.dumps({'error':  messages.HTTP_STATUS_OK_GET_COTA}), \
                 HTTPStatus.OK, JSON_CONTENT

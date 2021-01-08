@@ -6,7 +6,7 @@ WORKDIR /var/www
 COPY . /var/www
 
 RUN apk update \
-    && apk add --no-cache --virtual .build-deps build-base  python3-dev musl-dev  libffi-dev libressl-dev  
+    && apk add --no-cache --virtual .build-deps build-base  musl-dev  libffi-dev libressl-dev  
 
 
 RUN pip3 install  -r requirements.txt
