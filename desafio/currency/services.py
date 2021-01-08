@@ -7,6 +7,10 @@ from desafio.currency.models import RequestCurrencyQuotationParam
 class ServiceQuoteCurrencyPrice(object):
     API_BBC = "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/"
     HEADERS = {'accept': 'application/json;odata.metadata=minimal'}
+    
+    API_BBC = "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/"
+    HEADERS = {'accept': 'application/json;odata.metadata=minimal'}
+
 
     def _currencies_quote_by_symbol(self, symbol_currency, initial_date, final_date):
         qs = f"?%40moeda='{symbol_currency}'&%40dataInicial='{initial_date}'&%40dataFinalCotacao='{final_date}'&%24format=json"
