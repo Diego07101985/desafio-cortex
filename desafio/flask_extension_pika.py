@@ -1,5 +1,4 @@
 import datetime
-import pika
 import warnings
 from pika import connection
 
@@ -9,7 +8,7 @@ except ImportError as e:
     from queue import Queue
 
 try:
-    xrange
+    range
 except NameError as e:
     xrange = range
 

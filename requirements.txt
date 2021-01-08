@@ -9,3 +9,6 @@ pytest-mock
 requests
 cryptography==3.0
 pika==1.1.0
+nose
+coverage
+nosexcover
