@@ -8,4 +8,3 @@ class RequestCurrencyQuotationParam():
         self.from_simbol = from_simbol
         self.initial_date = initial_date
         self.final_date = final_date
-
