@@ -1,4 +1,4 @@
-# API Desafio Cortex 
+# API Desafio Corte
 
 ## Arquitetura
 
