@@ -10,7 +10,7 @@ mock_response_endpoint_bcb = {"value": [{
 }, {
     "simbolo": "CHF",
     "nomeFormatado": "Franco suíço",
-    "tipoMoeda": "A"
+    "tipoMoeda": "B"
 }]}
 
 
@@ -34,7 +34,7 @@ mock_reponse_api = {
             "dataHoraCotacao": "2020-11-26 13:09:53.465"
         },
         {
-            "valor_convertido": 139.00019603999215,
+            "valor_convertido": 139.0001960399921212,
             "dataHoraCotacao": "2020-11-26 13:09:53.469"
         }
     ]
