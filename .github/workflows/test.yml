@@ -28,6 +28,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Setting dependency cache 
+      run: |
+        esy export-dependencies
+      if: steps.restore-cache.outputs.cache-hit != 'true'
+  
   # lint:
   #   runs-on: ubuntu-latest
   #   name: Lint with flake8
@@ -64,10 +69,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Test with pytest
-        run: |
-          FLASK_APP=autoapp flask test;
         with:
           key: test-${{ runner.os }}-${{ github.run_id }}
           path: |
             test-cache
             ~/test-cache
+        run: |
+          FLASK_APP=autoapp flask test;
+        
