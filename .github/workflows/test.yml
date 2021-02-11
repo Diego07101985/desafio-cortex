@@ -1,5 +1,4 @@
-name: Python package
-
+name: Run Tests
 on: [push]
 # on:
 #   push:
@@ -31,4 +30,4 @@ jobs:
     #     flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest
+        FLASK_APP=autoapp flask test;
