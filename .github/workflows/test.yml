@@ -15,16 +15,19 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.8
-      
-    - name: cache docker image
-        id: cache-image
-        uses: actions/cache@v2
-        with:
-          path: path/to/store/cache
-          key: test-${{ runner.os }}-${{ hashFiles('requirements.txt') }}
+    - name: Cache pip
+      uses: actions/cache@v2
+      with:
+        # This path is specific to Ubuntu
+        path: ~/.cache/pip
+        # Look to see if there is a cache hit for the corresponding requirements file
+        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+          ${{ runner.os }}-
 
-      - name: build docker image
-        if: steps.cache-image.outputs.cache-hit != 'true'
+    - name: build docker image
+      if: steps.cache-image.outputs.cache-hit != 'true'
   
     - name: Install dependencies
       run: |
@@ -72,8 +75,8 @@ jobs:
         with:
           key: test-${{ runner.os }}-${{ hashFiles('requirements.txt') }}
           path: |
-            path/to/store/cache
-            ~/path/to/store/cache
+            /.cache/pip
+            ~/.cache/pip
         run: |
           FLASK_APP=autoapp flask test;
         
