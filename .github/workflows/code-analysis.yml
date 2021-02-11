@@ -3,9 +3,11 @@ on:
   workflow_run:
     workflows:
       - Run Tests
-    branches: [master]
+    branches: 
+      - '*'
     types: 
       - completed
+
 jobs:
   sonarcloud:
     name: SonarCloud
