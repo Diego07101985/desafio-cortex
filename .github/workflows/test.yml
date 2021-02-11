@@ -44,5 +44,6 @@ jobs:
   pytest: 
     name: Test with pytest
     needs: sonarcloud
+    steps:
       run: |
         FLASK_APP=autoapp flask test;
