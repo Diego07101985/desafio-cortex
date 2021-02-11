@@ -32,16 +32,16 @@ class TestServiceQuoteCurrencyPrice(unittest.TestCase):
 
         return mock_resp
 
-    @patch('requests.get')
-    def test_1_deve_retornar_none_retornar_currencys_bcb(self, mock_get):
-        mock_resp = self._mock_response(
-            json_data=mocks.mock_response_endpoint_bcb)
-        mock_get.return_value = mock_resp
+    # @patch('requests.get')
+    # def test_1_deve_retornar_none_retornar_currencys_bcb(self, mock_get):
+    #     mock_resp = self._mock_response(
+    #         json_data=mocks.mock_response_endpoint_bcb)
+    #     mock_get.return_value = mock_resp
 
-        currencys = self.service_currence.get_all_currencys()
-        self.assertTrue('AUD' in currencys)
-        self.assertTrue('CAD' in currencys)
-        self.assertTrue('CHF' in currencys)
+    #     currencys = self.service_currence.get_all_currencys()
+    #     self.assertTrue('AUD' in currencys)
+    #     self.assertTrue('CAD' in currencys)
+    #     self.assertTrue('CHF' in currencys)
 
     @patch('requests.get')
     def test_2_deve_retornar_a_cotacao_da_moeda(self, mock_get):
