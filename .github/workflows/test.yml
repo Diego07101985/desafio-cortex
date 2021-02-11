@@ -21,7 +21,7 @@ jobs:
       id: cache-venv
       with:
         # This path is specific to Ubuntu
-        path: ~/.cache/pip
+        path: ~/Library/Caches/pip.
         # Look to see if there is a cache hit for the corresponding requirements file
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
         restore-keys: |
@@ -71,11 +71,14 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Test with pytest
+    - name: Restore cache
       uses: ./
       with:
-        path: ~/.cache/pip
+        path: |
+          /Library/Caches/pip.
+         ~/Library/Caches/pip.
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+    - name: Test with pytest
       run: FLASK_APP=autoapp flask test;
         # with:
         #   key: test-${{ runner.os }}-${{ hashFiles('requirements.txt') }}
