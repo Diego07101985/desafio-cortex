@@ -26,8 +26,8 @@ jobs:
           ${{ runner.os }}-pip-
           ${{ runner.os }}-
 
-    - name: build docker image
-      if: steps.cache-image.outputs.cache-hit != 'true'
+    # - name: build docker image
+    #   if: steps.cache-image.outputs.cache-hit != 'true'
   
     - name: Install dependencies
       run: |
