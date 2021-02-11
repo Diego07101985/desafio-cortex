@@ -71,9 +71,9 @@ jobs:
       - name: Test with pytest
         run: |
           FLASK_APP=autoapp flask test;
-        with:
-          key: test-${{ runner.os }}-${{ hashFiles('requirements.txt') }}
-          path: |
-            /.cache/pip
-            ~/.cache/pip
+        # with:
+        #   key: test-${{ runner.os }}-${{ hashFiles('requirements.txt') }}
+        #   path: |
+        #     /.cache/pip
+        #     ~/.cache/pip
         
