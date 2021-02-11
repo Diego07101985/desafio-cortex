@@ -1,8 +1,8 @@
-name: Sonarcloud scan
-
+name: Sonarcloud
 on:
   workflow_run:
-    workflows: ["Run Tests"]
+    workflows:
+      - Run Tests
     branches: [master]
     types: 
       - completed
