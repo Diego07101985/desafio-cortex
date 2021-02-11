@@ -42,8 +42,10 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   pytest: 
-    name: Test with pytest
+    name: Test 
     needs: sonarcloud
     steps:
-      run: |
-        FLASK_APP=autoapp flask test;
+      - uses: actions/checkout@v2
+      - name: Test with pytest
+        run: |
+          FLASK_APP=autoapp flask test;
