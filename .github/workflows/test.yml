@@ -19,9 +19,9 @@ jobs:
       uses: actions/cache@v2
       with:
         # This path is specific to Ubuntu
-        path: ~/.cache/pip
+        path: /.cache/pip
         # Look to see if there is a cache hit for the corresponding requirements file
-        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+        key: ${{ runner.os }}-pip
         restore-keys: |
           ${{ runner.os }}-pip-
           ${{ runner.os }}-
@@ -71,7 +71,7 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          key: ${{ runner.os }}-pip
       - name: Test with pytest
         run: |
           FLASK_APP=autoapp flask test;
