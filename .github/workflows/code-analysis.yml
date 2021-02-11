@@ -1,6 +1,5 @@
 name: Sonarcloud scan
 
-
 on:
   workflow_run:
     workflows: ["Run Tests"]
