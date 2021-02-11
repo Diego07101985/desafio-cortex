@@ -16,23 +16,23 @@ jobs:
       with:
         python-version: 3.8
       
-    - uses: actions/cache@v2
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
+    - name: cache docker image
+        id: cache-image
+        uses: actions/cache@v2
+        with:
+          path: path/to/store/cache
+          key: test-${{ runner.os }}-${{ hashFiles('requirements.txt') }}
 
+      - name: build docker image
+        if: steps.cache-image.outputs.cache-hit != 'true'
+  
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Setting dependency cache 
-      run: |
-        esy export-dependencies
-      if: steps.restore-cache.outputs.cache-hit != 'true'
   
+ 
   # lint:
   #   runs-on: ubuntu-latest
   #   name: Lint with flake8
@@ -70,10 +70,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: Test with pytest
         with:
-          key: test-${{ runner.os }}-${{ github.run_id }}
+          key: test-${{ runner.os }}-${{ hashFiles('requirements.txt') }}
           path: |
-            test-cache
-            ~/test-cache
+            path/to/store/cache
+            ~/path/to/store/cache
         run: |
           FLASK_APP=autoapp flask test;
         
