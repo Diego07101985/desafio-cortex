@@ -43,6 +43,6 @@ jobs:
 
   pytest: 
     name: Test with pytest
-    needs:
+    needs: sonarcloud
       run: |
         FLASK_APP=autoapp flask test;
