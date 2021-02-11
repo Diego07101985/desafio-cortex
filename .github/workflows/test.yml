@@ -71,12 +71,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Restore cache
+    - name: Test with pytest
       uses: ./
       with:
         path: ~/.cache/pip
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-    - name: Test with pytest
       run: FLASK_APP=autoapp flask test;
         # with:
         #   key: test-${{ runner.os }}-${{ hashFiles('requirements.txt') }}
