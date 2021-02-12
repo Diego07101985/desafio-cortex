@@ -72,8 +72,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Restore cache
-      # uses: ./
-      uses: actions/cache@v2
+      uses: ./
+      # uses: actions/cache@v2
       with:
         path: |
           /.cache/pip
