@@ -41,9 +41,9 @@ jobs:
     needs: build
     allow-failure: true
     steps:
-    - uses: actions/checkout@v2
-      with:
-        python-version: 3.8
+      - uses: actions/checkout@v2
+        with:
+          python-version: 3.8
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
