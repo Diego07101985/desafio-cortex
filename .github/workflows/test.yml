@@ -73,14 +73,16 @@ jobs:
       uses: actions/checkout@v2
     - name: Restore cache
       uses: actions/cache@v2
-      id: cache-primes
       with:
         path: |
           /.cache/pip
           ~/.cache/pip
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-    - name: Test with pytest
-      run: FLASK_APP=autoapp flask test;
+    - name: Generate Prime Numbers
+      if: steps.cache-primes.outputs.cache-venv != 'true'
+      run: ls -la 
+    # - name: Test with pytest
+    #   run: FLASK_APP=autoapp flask test;
         # with:
         #   key: test-${{ runner.os }}-${{ hashFiles('requirements.txt') }}
         #   path: |
