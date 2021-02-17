@@ -80,7 +80,9 @@ jobs:
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
     - name: Generate Prime Numbers
       if: steps.cache-primes.outputs.cache-venv != 'true'
-      run: FLASK_APP=autoapp flask test; 
+      run: |
+        ls -la 
+        FLASK_APP=autoapp flask test; 
     # - name: Test with pytest
     #   run: 
         # with:
