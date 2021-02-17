@@ -22,13 +22,11 @@ jobs:
       with:
         # This path is specific to Ubuntu
         path: |
-          ~/venv
-          ~/.cache/pip
+          ./venv/
         # Look to see if there is a cache hit for the corresponding requirements file
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        key: ${{ runner.os }}-venv-${{ hashFiles('**/requirements.txt') }}
         restore-keys: |
-          ${{ runner.os }}-pip-
-          ${{ runner.os }}-
+          ${{ runner.os }}-venv-
     - name: Install dependencies
       run: |
         sudo apt-get -y install python3-pip
@@ -80,14 +78,12 @@ jobs:
       uses: actions/cache@v2
       with:
         path: |
-          ~/venv
-          ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          ./venv/
+        key: ${{ runner.os }}-venv-${{ hashFiles('**/requirements.txt') }}
     - name: Generate Prime Numbers
       if: steps.cache-primes.outputs.cache-venv != 'true'
       run: |
-        cd ~/.cache/pip
-        source venv/bin/activate
+        . ./venv/bin/activate
         FLASK_APP=autoapp flask test; 
     # - name: Test with pytest
     #   run: 
