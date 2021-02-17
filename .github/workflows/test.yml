@@ -4,30 +4,83 @@ on:
   push:
     branches:
       - '*'
-  pull_request:
-    types: [opened, synchronize, reopened]
     
 jobs:
   build:
-
+    name: Build
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python 3.8
+    - name: Setup Python
       uses: actions/setup-python@v2
       with:
-        python-version: 3.8
+        python-version: '3.8'
+    
+    - name: Cache pip
+      uses: actions/cache@v2
+      id: cache-venv
+      with:
+        # This path is specific to Ubuntu
+        path: |
+          ./venv/
+        # Look to see if there is a cache hit for the corresponding requirements file
+        key: ${{ runner.os }}-venv-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-venv-
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
+        sudo apt-get -y install python3-pip
         pip install flake8 pytest
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    # - name: Lint with flake8
-    #   run: |
-    #     # stop the build if there are Python syntax errors or undefined names
-    #     flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-    #     # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-    #     flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        pip3 install virtualenv
+        make install
+        ls -la 
+ 
+
+  lint:
+    name: Lint with flake8
+    runs-on: ubuntu-latest
+    needs: pytest  
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          python-version: 3.8
+      - name: Lint with flake8
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    needs: pytest  
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy 
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  pytest: 
+    name: Test 
+    runs-on: ubuntu-latest 
+    needs: build
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Restore cache
+      uses: actions/cache@v2
+      with:
+        path: |
+          ./venv/
+        key: ${{ runner.os }}-venv-${{ hashFiles('**/requirements.txt') }}
     - name: Test with pytest
+      if: steps.cache-primes.outputs.cache-venv != 'true'
       run: |
-        FLASK_APP=autoapp flask test;
+        . ./venv/bin/activate
+        FLASK_APP=autoapp flask test; 
