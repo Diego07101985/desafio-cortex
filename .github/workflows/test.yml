@@ -35,9 +35,8 @@ jobs:
         make install
         ls -la 
  
-  lint:
 
-  pytest: 
+  lint:
     name: Lint with flake8
     runs-on: ubuntu-latest 
     needs: build
