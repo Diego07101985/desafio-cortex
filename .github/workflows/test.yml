@@ -82,6 +82,7 @@ jobs:
     - name: Generate Prime Numbers
       if: steps.cache-primes.outputs.cache-venv != 'true'
       run: |
+        cd ~/venv
         ls -la 
         source venv/bin/activate
         FLASK_APP=autoapp flask test; 
