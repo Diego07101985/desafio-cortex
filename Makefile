@@ -25,12 +25,12 @@ test:
     )
 
 install:
-	- virtualenv -p python3.8 ../desafio-cortex/build
+	- virtualenv -p python3.8 venv
 	- ( \
-        .  build/bin/activate; \
+        .  venv/bin/activate; \
         pip3 install -r requirements.txt; \
+		pip install -U pytest; \
     )
-
 run:
 	- ( \
        .  build/bin/activate; \

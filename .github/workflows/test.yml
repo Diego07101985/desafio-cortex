@@ -31,7 +31,7 @@ jobs:
       run: |
         sudo apt-get -y install python3-pip
         pip install flake8 pytest
-        if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
+        if [ -f requirements.txt ]; make install; fi
   
 
  
