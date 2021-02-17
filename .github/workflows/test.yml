@@ -31,7 +31,7 @@ jobs:
       run: |
         sudo apt-get -y install python3-pip
         pip install flake8 pytest
-        if [ -f requirements.txt ]; make install; fi
+        if [ -f requirements.txt ]; make install;
   
 
  
@@ -82,6 +82,7 @@ jobs:
       if: steps.cache-primes.outputs.cache-venv != 'true'
       run: |
         ls -la 
+        source venv/bin/activate
         FLASK_APP=autoapp flask test; 
     # - name: Test with pytest
     #   run: 
